@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package sequentialagent provides an agent implementation that executes
+// its sub-agents once, in the order they are listed.
+//
+// Use the SequentialAgent when you want the execution to occur in a fixed,
+// strict order.
 package sequentialagent
 
 import (
@@ -19,20 +24,16 @@ import (
 	"google.golang.org/adk/agent/workflowagents/loopagent"
 )
 
+// Config holds the configuration for a SequentialAgent.
+type Config struct {
+	// Basic agent setup.
+	AgentConfig agent.Config
+}
+
 // New creates a SequentialAgent.
-//
-// SequentialAgent executes its sub-agents once, in the order they are listed.
-//
-// Use the SequentialAgent when you want the execution to occur in a fixed,
-// strict order.
 func New(cfg Config) (agent.Agent, error) {
 	return loopagent.New(loopagent.Config{
 		AgentConfig:   cfg.AgentConfig,
 		MaxIterations: 1,
 	})
-}
-
-type Config struct {
-	// Basic agent setup.
-	AgentConfig agent.Config
 }

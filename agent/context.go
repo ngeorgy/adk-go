@@ -35,6 +35,8 @@ type agentContext struct {
 	branch      string
 }
 
+// NewContext initializes and returns a new agentContext for a single agent,
+// capturing the necessary states like user content, session, and artifacts.
 // TODO: see if needed or possible to make internal
 func NewContext(ctx context.Context, agent Agent, userContent *genai.Content, artifacts Artifacts, session session.Session, branch string) *agentContext {
 	ctx, cancel := context.WithCancel(ctx)

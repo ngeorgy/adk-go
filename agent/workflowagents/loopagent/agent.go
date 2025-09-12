@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package loopagent provides an agent implementation that repeatedly runs
+// its sub-agents in sequence for a specified number ofiterations or until
+// a termination condition is met.
+//
+// Use the LoopAgent when your workflow involves repetition or iterative
+// refinement, such as like revising code.
 package loopagent
 
 import (
@@ -22,6 +28,7 @@ import (
 	"google.golang.org/adk/session"
 )
 
+// Config holds the configuration for a LoopAgent.
 type Config struct {
 	// Basic agent setup.
 	AgentConfig agent.Config
@@ -32,12 +39,6 @@ type Config struct {
 }
 
 // New creates a LoopAgent.
-//
-// LoopAgent repeatedly runs its sub-agents in sequence for a specified number
-// of iterations or until a termination condition is met.
-//
-// Use the LoopAgent when your workflow involves repetition or iterative
-// refinement, such as like revising code.
 func New(cfg Config) (agent.Agent, error) {
 	if cfg.AgentConfig.Run != nil {
 		return nil, fmt.Errorf("LoopAgent doesn't allow custom Run implementations")

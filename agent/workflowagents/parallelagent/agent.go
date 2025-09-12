@@ -12,6 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package parallelagent provides an agent implementation that runs its
+// sub-agents in parallel in isolated manner.
+//
+// This approach is beneficial for scenarios requiring multiple perspectives or
+// attempts on a single task, such as:
+// - Running different algorithms simultaneously.
+// - Generating multiple responses for review by a subsequent evaluation agent.
 package parallelagent
 
 import (
@@ -23,19 +30,13 @@ import (
 	"google.golang.org/adk/session"
 )
 
+// Config holds the configuration for a ParallelAgent.
 type Config struct {
 	// Basic agent setup.
 	AgentConfig agent.Config
 }
 
 // New creates a ParallelAgent.
-//
-// Parallel agent runs its sub-agents in parallel in isolated manner.
-//
-// This approach is beneficial for scenarios requiring multiple perspectives or
-// attempts on a single task, such as:
-// - Running different algorithms simultaneously.
-// - Generating multiple responses for review by a subsequent evaluation agent.
 func New(cfg Config) (agent.Agent, error) {
 	if cfg.AgentConfig.Run != nil {
 		return nil, fmt.Errorf("ParallelAgent doesn't allow custom Run implementations")

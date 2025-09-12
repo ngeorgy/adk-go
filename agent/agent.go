@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package agent provides the interfaces and concrete types for defining,
+// configuring, and running agents.
 package agent
 
 import (
@@ -76,7 +78,10 @@ type Artifacts interface {
 	List() ([]string, error)
 }
 
+// BeforeAgentCallback defines a function type that is executed before the agent's Run method is called.
 type BeforeAgentCallback func(Context) (*genai.Content, error)
+
+// AfterAgentCallback defines a function type that is executed after each event is yielded by the agent's Run method.
 type AfterAgentCallback func(Context, *session.Event, error) (*genai.Content, error)
 
 type agent struct {

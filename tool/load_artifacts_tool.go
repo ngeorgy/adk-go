@@ -137,6 +137,7 @@ func (t *loadArtifactsTool) processLoadArtifactsFunctionCall(ctx Context, req *l
 	if len(req.Contents) == 0 {
 		return nil
 	}
+
 	lastContent := req.Contents[len(req.Contents)-1]
 	if lastContent == nil || len(lastContent.Parts) == 0 {
 		return nil
@@ -145,7 +146,6 @@ func (t *loadArtifactsTool) processLoadArtifactsFunctionCall(ctx Context, req *l
 	if firstPart.FunctionResponse == nil {
 		return nil
 	}
-
 	functionResponse := firstPart.FunctionResponse
 
 	if functionResponse.Name != "load_artifacts" {
@@ -169,7 +169,6 @@ func (t *loadArtifactsTool) processLoadArtifactsFunctionCall(ctx Context, req *l
 
 	for i, artifactName := range artifactNames {
 		group.Go(func() error {
-			// Although not used, we need to pass childCtx for early return in case of an error.
 			content, err := t.loadIndividualArtifact(childCtx, artifactsService, artifactName)
 			if err != nil {
 				return fmt.Errorf("failed to load artifact %s: %w", artifactName, err)

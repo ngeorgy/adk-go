@@ -50,7 +50,7 @@ type Runner struct {
 	appName         string
 	rootAgent       agent.Agent
 	sessionService  sessionservice.Service
-	artifactService artifactservice.Service
+	ArtifactService artifactservice.Service
 
 	parents parentmap.Map
 }
@@ -94,9 +94,9 @@ func (r *Runner) Run(ctx context.Context, userID, sessionID string, msg *genai.C
 		})
 
 		var artifactsImpl agent.Artifacts = nil
-		if r.artifactService != nil {
+		if r.ArtifactService != nil {
 			artifactsImpl = &artifacts{
-				service: r.artifactService,
+				service: r.ArtifactService,
 				id:      session.ID(),
 			}
 		}

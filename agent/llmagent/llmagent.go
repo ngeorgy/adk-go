@@ -19,6 +19,8 @@ import (
 	"iter"
 	"strings"
 
+	"github.com/google/jsonschema-go/jsonschema"
+	"github.com/santhosh-tekuri/jsonschema/v6"
 	"google.golang.org/adk/agent"
 	agentinternal "google.golang.org/adk/internal/agent"
 	icontext "google.golang.org/adk/internal/context"
@@ -127,14 +129,12 @@ type Config struct {
 	// user messages, tool requests, etc.
 	IncludeContents string
 
-	// TODO(ngeorgy): consider to switch to jsonschema for input and output schema.
-	// The input schema when agent is used as a tool.
-	InputSchema *genai.Schema
+	InputSchema *jsonschema.Schema
 	// The output schema when agent replies.
 	//
 	// NOTE: when this is set, agent can only reply and cannot use any tools,
 	// such as function tools, RAGs, agent transfer, etc.
-	OutputSchema *genai.Schema
+	OutputSchema *jsonschema.Schema
 
 	// TODO: BeforeTool and AfterTool callbacks
 	Tools []tool.Tool
@@ -167,8 +167,8 @@ type llmAgent struct {
 	afterModel  []llminternal.AfterModelCallback
 	instruction string
 
-	inputSchema  *genai.Schema
-	outputSchema *genai.Schema
+	inputSchema  *jsonschema.Schema
+	outputSchema *jsonschema.Schema
 }
 
 type agentState = agentinternal.State

@@ -101,6 +101,10 @@ func (a *agent) SubAgents() []Agent {
 func (a *agent) Run(ctx InvocationContext) iter.Seq2[*session.Event, error] {
 	return func(yield func(*session.Event, error) bool) {
 		// TODO: verify&update the setup here. Should we branch etc.
+		var branch string = ctx.Branch()
+		if branch != "" {
+			branch = branch + "." + a.Name()
+		}
 		ctx := &invocationContext{
 			Context:   ctx,
 			agent:     a,
@@ -109,7 +113,7 @@ func (a *agent) Run(ctx InvocationContext) iter.Seq2[*session.Event, error] {
 			session:   ctx.Session(),
 
 			invocationID: ctx.InvocationID(),
-			branch:       ctx.Branch(),
+			branch:       branch,
 			userContent:  ctx.UserContent(),
 			runConfig:    ctx.RunConfig(),
 		}

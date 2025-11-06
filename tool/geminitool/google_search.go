@@ -26,14 +26,17 @@ import (
 // perform local code execution.
 type GoogleSearch struct{}
 
+// Name implements tool.Tool.
 func (s GoogleSearch) Name() string {
 	return "google_search"
 }
 
+// Description implements tool.Tool.
 func (s GoogleSearch) Description() string {
 	return "google_search"
 }
 
+// ProcessRequest adds the GoogleSearch tool to the LLM request.
 func (s GoogleSearch) ProcessRequest(ctx tool.Context, req *model.LLMRequest) error {
 	return setTool(req, &genai.Tool{
 		GoogleSearch: &genai.GoogleSearch{},
